@@ -1,17 +1,22 @@
-from base.graph import Graph
+from base.vertex import Vertex
+from base.graph import UndirectedGraph
 from algorithm.bfs import bfs
+from algorithm.utils import print_path
 
-def main() -> None:
-    g = Graph()
-    g.add_edge("A", "B")
-    g.add_edge("A", "C")
-    g.add_edge("B", "D")
-    g.add_edge("C", "E")
+def main():
+    a, b, c, d, e = Vertex("A"), Vertex("B"), Vertex("C"), Vertex("D"), Vertex("E")
 
-    print("Grafo:")
-    print(g)
-    print("\nBFS a partir de A:")
-    print(" -> ".join(bfs(g, "A")))
+    g = UndirectedGraph()
+    g.add_edge(a, b)
+    g.add_edge(a, c)
+    g.add_edge(b, d)
+    g.add_edge(c, e)
 
-if __name__ == "__main__":
-    main()
+    dist, pred, _ = bfs(g, a)
+
+    # imprime caminho de A até E
+    path = print_path(pred, a, e)
+    if path:
+        print("Path A->E:", " -> ".join(str(v.id) for v in path))
+    else:
+        print("No path from A to E")
