@@ -3,6 +3,7 @@ from collections import deque
 from typing import Dict, List, Optional
 from base.graph import Graph
 from base.vertex import Vertex
+from base.enums import Color
 
 def bfs(graph: Graph, start: Vertex):
     """
@@ -25,7 +26,7 @@ def bfs(graph: Graph, start: Vertex):
     order: List[Vertex] = []
 
     for u in graph.vertices():
-        color[u] = "WHITE"
+        color[u] = Color.WHITE
         dist[u] = math.inf
         pred[u] = None
 
@@ -42,12 +43,12 @@ def bfs(graph: Graph, start: Vertex):
         order.append(u)
 
         for v in graph.adjacent(u).keys():
-            if color[v] == "WHITE":
-                color[v] = "GRAY"
+            if color[v] == Color.WHITE:
+                color[v] = Color.GRAY
                 dist[v] = dist[u] + 1
                 pred[v] = u
                 q.append(v)
 
-        color[u] = "BLACK"
+        color[u] = Color.BLACK
 
     return dist, pred, order
